@@ -1,19 +1,26 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 class Program
 {
-    static void Main()
+    static async Task Main(string[] args)
     {
+        Console.InputEncoding = System.Text.Encoding.UTF8; // Підтримка українських символів у консолі
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        string imageUrl = "https://raw.githubusercontent.com/github/explore/main/topics/csharp/csharp.png";
+        string base64 = await imageUrl.ToBase64ImageAsync();
+        Console.WriteLine(base64);
 
 
-        string rawPhone = "0671234567";
-        string formatted = rawPhone.ToPrivatFormat();
-        Console.WriteLine(formatted);  // +38 (067) 123-45-67
-
-        string raw2 = "380991112233";
-        Console.WriteLine(raw2.ToPrivatFormat());  // +38 (099) 111-22-33
-
-        string invalid = "123";
-        Console.WriteLine(invalid.ToPrivatFormat());  // 123 (неформатований)
+        try
+        {
+            string base64Image = await imageUrl.ToBase64ImageAsync();
+            Console.WriteLine(base64Image); // Виведе Base64 у консоль
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Помилка: " + ex.Message);
+        }
     }
 }
